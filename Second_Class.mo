@@ -98,5 +98,60 @@ package Second_Class
     annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
           coordinateSystem(preserveAspectRatio=false)));
   end MotorDrive;
-  annotation (uses(Modelica(version="4.0.0")));
+
+  package Tutorial3
+    package Components
+      model Machine
+        Modelica.Electrical.Analog.Basic.Resistor resistor(R=0.5)
+          annotation (Placement(transformation(extent={{-58,18},{-38,38}})));
+        Modelica.Electrical.Analog.Basic.Inductor inductor(L=0.05)
+          annotation (Placement(transformation(extent={{-12,18},{8,38}})));
+        Modelica.Mechanics.Rotational.Components.Inertia inertia(J=0.001)
+          annotation (Placement(transformation(extent={{30,2},{50,22}})));
+        Modelica.Mechanics.Rotational.Interfaces.Flange_b dulo
+          "Flange of right shaft"
+          annotation (Placement(transformation(extent={{90,2},{110,22}})));
+        Modelica.Electrical.Analog.Interfaces.PositivePin p1
+                      "Positive electrical pin"
+          annotation (Placement(transformation(extent={{-110,18},{-90,38}})));
+        Modelica.Electrical.Analog.Basic.EMF emf1
+          annotation (Placement(transformation(extent={{0,0},{20,20}})));
+        Modelica.Electrical.Analog.Interfaces.NegativePin n1
+                                 "Negative electrical pin"
+          annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+      equation
+        connect(resistor.n, inductor.p)
+          annotation (Line(points={{-38,28},{-12,28}}, color={0,0,255}));
+        connect(inertia.flange_b, dulo)
+          annotation (Line(points={{50,12},{100,12}}, color={0,0,0}));
+        connect(resistor.p, p1)
+          annotation (Line(points={{-58,28},{-100,28}}, color={0,0,255}));
+        connect(inductor.n, emf1.p)
+          annotation (Line(points={{8,28},{10,28},{10,20}}, color={0,0,255}));
+        connect(emf1.flange, inertia.flange_a) annotation (Line(points={{20,10},
+                {26,10},{26,12},{30,12}}, color={0,0,0}));
+        connect(emf1.n, n1)
+          annotation (Line(points={{10,0},{-100,0}}, color={0,0,255}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                Rectangle(
+                extent={{-98,62},{94,-74}},
+                lineColor={0,0,0},
+                fillColor={255,85,85},
+                fillPattern=FillPattern.HorizontalCylinder), Ellipse(
+                extent={{-44,-72},{34,-100}},
+                lineColor={0,0,0},
+                fillPattern=FillPattern.HorizontalCylinder,
+                fillColor={255,85,85})}), Diagram(coordinateSystem(
+                preserveAspectRatio=false), graphics={Rectangle(
+                extent={{-100,60},{-98,60}},
+                lineColor={0,0,255},
+                fillColor={255,85,85},
+                fillPattern=FillPattern.Solid)}));
+      end Machine;
+    end Components;
+
+    package Tests
+    end Tests;
+  end Tutorial3;
+  annotation (uses(Modelica(version="3.2.3")));
 end Second_Class;

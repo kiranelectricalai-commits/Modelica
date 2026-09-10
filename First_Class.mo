@@ -1,5 +1,7 @@
 within ;
-package another
+package First_Class "This is the practice class"
+
+
   model SimplePendulum
 
     parameter Real L = 1 "Pendulum length (m)";
@@ -15,4 +17,4 @@ package another
     der(omega) = -(g/L)*sin(theta);
 
   end SimplePendulum;
-end another;
+end First_Class;
